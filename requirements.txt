@@ -1,0 +1,8 @@
+scikit-learn
+numpy
+pandas
+nltk
+torch
+gensim
+sentence_transformers
+flask
