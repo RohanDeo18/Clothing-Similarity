@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Similarity Search</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 5px;
+    }
+
+    .form-field {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .submit-button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      color: #fff;
+      background-color: #337ab7;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .output-container {
+      margin-top: 20px;
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .output-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .output-item {
+      margin-bottom: 5px;
+      color: #337ab7;
+      cursor: pointer;
+    }
+
+    .output-item:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Similarity Search</h1>
+    <div class="form-container">
+      <label class="form-label" for="input-text">What type of clothing do you want:</label>
+      <input class="form-field" type="text" id="input-text" name="input_text"><br><br>
+      <label class="form-label" for="top-n">How many results do you wish to see:</label>
+      <input class="form-field" type="number" id="top-n" name="top_n" min="1" value="5"><br><br>
+      <button class="submit-button" onclick="submitForm()">Submit</button>
+    </div>
+    <div class="output-container" id="output-container"></div>
+  </div>
+
+  <script>
+    function submitForm() {
+      var inputText = document.getElementById('input-text').value;
+      var topN = document.getElementById('top-n').value;
+      var outputContainer = document.getElementById('output-container');
+
+      // Perform AJAX request to the server to get the ranked results
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          var response = JSON.parse(xhr.responseText);
+          var rankedResults = response.similar_items;
+          var outputHtml = '';
+          if (rankedResults.length > 0) {
+            outputHtml += '<p class="output-title">Similar Clothing Results:</p>';
+            for (var i = 0; i < rankedResults.length; i++) {
+              outputHtml += '<div class="output-item">' + rankedResults[i] + '</div>';
+            }
+          } else {
+            outputHtml += '<p class="output-title">No similar items found.</p>';
+          }
+          outputContainer.innerHTML = outputHtml;
+        } else {
+          outputContainer.innerHTML = '<p class="output-title">Error occurred. Please try again later.</p>';
+        }
+      };
+      xhr.send(JSON.stringify({ input_text: inputText, top_n: topN }));
+
+      // Show loading state while waiting for the response
+      outputContainer.innerHTML = '<p class="output-title">Loading...</p>';
+    }
+  </script>
+</body>
+</html>
