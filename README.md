@@ -3,12 +3,13 @@
 This project aims to provide a clothing similarity search functionality using natural language processing techniques. Given a user's input text describing a desired clothing item, the system retrieves and ranks similar clothing items from a pre-defined dataset.
 Overview
 
-The clothing similarity project leverages the power of word embeddings and cosine similarity to find similarities between clothing items based on their descriptions. The Word2Vec model is used to encode text into numerical feature vectors, and cosine similarity is used to calculate the similarity scores. The dataset used in this project is created by scraping clothing data from Myntra.com and Ajio.com.
-Instructions for Deployment
+The clothing similarity project leverages the power of word embeddings and cosine similarity to find similarities between clothing items based on their descriptions. The Word2Vec model is used to encode text into numerical feature vectors, and cosine similarity is used to calculate the similarity scores. The dataset used in this project is created by scraping a diverse set of clothing data from Myntra.com and Ajio.com.
+
 
 ## Dataset Information
 
-The dataset used in this project is created by scraping clothing data from Myntra.com and Ajio.com. It contains a collection of clothing items along with their descriptions and URLs. The dataset is pre-processed and cleaned for use in the similarity search algorithm.
+The dataset used in this project is created by scraping clothing data from Myntra.com and Ajio.com. It contains a collection of clothing items along with their descriptions, brands and URLs. The file preprocess.py is used to clean and process the dataset - it also stores the cleaned data in a json format (cleaned_data.json). This cleaned json dataset is then used in the similarity search algorithm.
+
 
 To deploy the clothing similarity application, follow these steps:
 
@@ -88,6 +89,8 @@ Access the application by visiting http://localhost:5000 in your web browser.
 13. Access the deployed application using the provided URL.
 
 
+
+ 
 ## Conclusion
 
 The clothing similarity project provides an efficient and accurate way to find similar clothing items based on the user input. By leveraging natural language processing techniques (Word2Vec for this project), it enables users to discover relevant clothing options quickly. Follow the deployment instructions to set up the application and start exploring the world of clothing similarity.
